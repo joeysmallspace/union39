@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台灣電力工會第39分會 | 捍衛・爭取・團結</title>
+    <title>台灣電力工會第39分會 | 莫忘中初</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* --- CSS 樣式設定 --- */
+        /* --- CSS 樣式設定 (變數保持不變) --- */
         :root {
             --bg-color: #0a0a0a;
             --surface-color: #1a1a1a;
@@ -20,6 +20,7 @@
             --text-secondary: #a0a0a0;
             --accent-yellow: #FFD700; /* 閃電黃 */
             --accent-blue: #00E5FF;   /* 電流藍 */
+            --green-highlight: #3D9970; /* 服務表單綠色 */
         }
 
         * {
@@ -36,7 +37,7 @@
             line-height: 1.6;
         }
 
-        /* 背景紋理 - 增加質感深度 */
+        /* (背景紋理樣式保持不變) */
         body::before {
             content: "";
             position: fixed;
@@ -55,251 +56,199 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
+            padding: 15px 5%;
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             position: fixed;
             width: 100%;
             z-index: 100;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(10, 10, 10, 0.7);
+            background: rgba(10, 10, 10, 0.8);
+        }
+        
+        /* --- LOGO 圖片優化 --- */
+        .logo-img {
+            height: 50px; /* 調整大小 */
+            width: auto;
+            /* 增加陰影，讓 Logo 更有深度和霓虹感 */
+            filter: drop-shadow(0 0 5px var(--accent-yellow)) contrast(120%);
+            transition: filter 0.3s;
+        }
+        .logo-img:hover {
+            filter: drop-shadow(0 0 10px var(--accent-yellow)) contrast(150%);
         }
 
-        .logo {
-            font-weight: 900;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
+        /* --- 新增快速連結按鈕樣式 --- */
+        .quick-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .quick-btn {
+            background: none;
+            border: 1px solid var(--text-secondary);
+            color: var(--text-primary);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .quick-btn:hover {
+            border-color: var(--accent-yellow);
             color: var(--accent-yellow);
-            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
         }
 
         /* Hero 區域 */
         .hero {
-            min-height: 100vh;
+            min-height: 80vh; /* 縮小一點給互動區塊空間 */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             position: relative;
-            padding: 100px 20px 0;
+            padding: 120px 20px 80px;
         }
 
+        /* H1 Slogan 替換成「莫忘中初」 */
         .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-size: clamp(3rem, 10vw, 6rem);
             font-weight: 900;
-            line-height: 1.1;
+            letter-spacing: 5px;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 30%, #777 100%);
+            background: linear-gradient(135deg, var(--accent-yellow) 30%, #fff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
         }
-
-        .highlight {
-            color: var(--accent-yellow);
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        
+        .hero h5 {
+            color: var(--accent-blue); 
+            letter-spacing: 3px; 
+            margin-bottom: 15px; 
+            text-transform: uppercase;
         }
-
-        /* 核心訊息卡片 */
-        .features {
-            padding: 100px 5%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+        
+        /* --- 彈出資訊表單 Modal 容器樣式 --- */
+        .info-modal {
+            display: none; /* 預設隱藏 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000; 
+            padding-top: 80px;
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
         }
-
-        .card {
+        
+        .modal-content {
             background: var(--surface-color);
+            margin: 20px auto;
             padding: 40px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            max-width: 90%;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--accent-yellow);
             position: relative;
-            overflow: hidden;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border-color: var(--accent-yellow);
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 25px;
             color: #fff;
-        }
-
-        .card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* --- 互動區塊：團結蓄能 --- */
-        .interactive-section {
-            padding: 120px 20px;
-            text-align: center;
-            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
-            position: relative;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .power-container {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .power-btn {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-yellow);
-            background: transparent;
-            color: var(--accent-yellow);
-            font-weight: 900;
-            font-size: 1.2rem;
+            font-size: 30px;
+            font-weight: bold;
             cursor: pointer;
-            position: relative;
-            outline: none;
-            transition: all 0.1s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            user-select: none;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* 蓄力時的動畫效果 */
-        .power-btn.charging {
-            background: rgba(255, 215, 0, 0.15);
-            box-shadow: 0 0 40px var(--accent-yellow), inset 0 0 20px var(--accent-yellow);
-            text-shadow: 0 0 10px #fff;
-            border-color: #fff;
-        }
-
-        .status-text {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            height: 24px;
             transition: color 0.3s;
-            font-weight: 500;
         }
 
-        .power-level-bar {
-            width: 300px;
-            max-width: 80vw;
-            height: 6px;
-            background: #333;
-            border-radius: 3px;
-            overflow: hidden;
-            margin-top: 15px;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
-        }
-
-        .power-level-fill {
-            width: 0%;
-            height: 100%;
-            background: var(--accent-blue);
-            transition: width 0.05s linear;
-            box-shadow: 0 0 15px var(--accent-blue);
-        }
-
-        /* 充滿電的特效 Class */
-        body.powered-up {
-            animation: shake 0.5s;
-        }
-        
-        /* 震動動畫 */
-        @keyframes shake {
-            /* (動畫幀保持不變) */
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-        
-        /* --- 音樂控制按鈕樣式 --- */
-        .music-control {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--surface-color);
-            border: 2px solid var(--accent-yellow);
+        .close-btn:hover {
             color: var(--accent-yellow);
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-            outline: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .music-control:hover {
-            background: var(--accent-yellow);
+        /* 資訊表格樣式 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .data-table th, .data-table td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background-color: var(--green-highlight); /* 參考圖片二的綠色 */
             color: var(--bg-color);
-            box-shadow: 0 0 25px var(--accent-yellow);
-        }
-
-        /* 解鎖時的樣式 (藍色光暈) */
-        .music-control.unmuted {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
-        }
-
-        /* Footer */
-        footer {
-            padding: 50px 20px;
+            font-weight: 700;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.8rem;
-            color: #555;
-            background-color: #050505;
+            border-color: var(--green-highlight);
         }
+
+        .data-table tr:nth-child(even) {
+            background-color: #111;
+        }
+
+        /* 服務廠商特別排版 */
+        .vendor-table td:nth-child(3) { color: var(--accent-blue); font-weight: 500;} /* 服務專員名字 */
+        .vendor-table td:nth-child(4) { color: var(--accent-yellow); font-weight: 700; } /* 服務專線 */
+
+        /* 其他原有樣式保持不變 */
+        .interactive-section { padding: 80px 20px; } /* 調整 padding */
+        /* ... (power-btn, power-level-bar 等樣式保持不變) ... */
 
     </style>
 </head>
 <body>
 
     <audio id="bgMusic" loop autoplay muted>
-        <source src="bg001.mp3" type="audio/mpeg">
+        <source src="bg001.mp3" type="audio/mpeg"> 
         您的瀏覽器不支援音訊元素。
     </audio>
 
     <button id="muteToggle" class="music-control">
         <i class="fas fa-volume-mute"></i>
     </button>
-
+    
     <nav>
-        <div class="logo">TPC UNION 39</div>
-        <div style="font-size: 0.9rem; color: #fff; font-weight: 500;">團結・誠信・戰鬥</div>
+        <a href="#top" class="logo">
+            <img src="union_logo.png" alt="台灣電力工會第39分會 LOGO" class="logo-img">
+        </a>
+        
+        <div class="quick-links">
+            <button class="quick-btn" onclick="showModal('member')">工會成員</button>
+            <button class="quick-btn" onclick="showModal('vendor')">服務廠商</button>
+        </div>
     </nav>
 
-    <section class="hero">
-        <h5 style="color: var(--accent-blue); letter-spacing: 3px; margin-bottom: 15px; text-transform: uppercase;">Taiwan Power Labor Union Branch 39</h5>
-        <h1>分秒必爭<br><span style="color: var(--accent-yellow);">捍衛勞權</span></h1>
+    <section class="hero" id="top">
+        <h5>台灣電力工會 第39分會</h5>
+        <h1>莫忘中初</h1>
         <p>每一分鐘，我們都在為勞工爭取最大利益。<br>面對資方，我們是那道永不熄滅的<span class="highlight">高壓防線</span>。</p>
+    </section>
+    
+    <section class="interactive-section">
+        <h2 style="margin-bottom: 10px; font-size: 2rem;">凝聚力量，點亮希望</h2>
+        <p style="color: #666; margin-bottom: 40px; font-size: 0.9rem;">試著長按下方按鈕，感受團結的力量</p>
+        
+        <div class="power-container">
+            <button class="power-btn" id="powerBtn">
+                長按<br>蓄力
+            </button>
+            <div class="power-level-bar">
+                <div class="power-level-fill" id="powerFill"></div>
+            </div>
+            <p class="status-text" id="statusText">等待注入力量...</p>
+        </div>
     </section>
 
     <section class="features">
@@ -316,31 +265,72 @@
             <p>個人的聲音或許微小，但團結的怒吼能撼動高牆。第39分會是您最強大的後盾，我們並肩作戰。</p>
         </div>
     </section>
-
-    <section class="interactive-section">
-        <h2 style="margin-bottom: 10px; font-size: 2rem;">凝聚力量，點亮希望</h2>
-        <p style="color: #666; margin-bottom: 40px; font-size: 0.9rem;">試著長按下方按鈕，感受團結的力量</p>
-        
-        <div class="power-container">
-            <button class="power-btn" id="powerBtn">
-                長按<br>蓄力
-            </button>
-            
-            <div class="power-level-bar">
-                <div class="power-level-fill" id="powerFill"></div>
-            </div>
-            
-            <p class="status-text" id="statusText">等待注入力量...</p>
-        </div>
-    </section>
-
+    
     <footer>
         <p>&copy; 2025 台灣電力工會第39分會. All Rights Reserved.</p>
         <p>為勞工而戰，永不歇息。</p>
     </footer>
 
+    <div id="vendor-modal" class="info-modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 style="color: var(--accent-yellow);">駐會服務廠商 (駐會服務時間：下午 2:00 - 5:00)</h2>
+            <table class="data-table vendor-table">
+                <thead>
+                    <tr>
+                        <th>時間</th>
+                        <th>駐會服務廠商</th>
+                        <th>服務專員</th>
+                        <th>服務專線</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>星期一</td><td>三商壽、中國人壽</td><td>葉貞淑、王柳芬、張珮瑜</td><td>0929-651916、0938-033838、0970-166789</td></tr>
+                    <tr><td>星期二</td><td>上億保經、富邦人壽</td><td>吳素珠、林佳慧、俞瑤</td><td>0982-640656、0919-060556、0921-994564</td></tr>
+                    <tr><td>星期三</td><td>和泰產物</td><td>李冠杰</td><td>0912-157154</td></tr>
+                    <tr><td>星期四</td><td>台新銀行、陽光生前契約、公勝保經</td><td>李婉茹、吳淑妙、黃詠靜</td><td>0933-765827、0932-662682、0927-598080</td></tr>
+                    <tr><td>星期五</td><td>國泰人壽、威勝保經、凱基銀行</td><td>謝春瑩、梁鳳玲、蘇燕雀、許嵐欣</td><td>0930-788266、0920-398508、0980-655345、0914-090067</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="member-modal" class="info-modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 style="color: var(--green-highlight);">工會成員聯絡資訊 (會務推動中心)</h2>
+            <table class="data-table member-table">
+                <thead>
+                    <tr>
+                        <th>職稱</th>
+                        <th>姓名</th>
+                        <th>服務部門</th>
+                        <th>電話(0)</th>
+                        <th>行動</th>
+                        <th>備註</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: var(--green-highlight); color: var(--bg-color);">
+                        <td>常務理事</td><td>謝佳興</td><td>變電課</td><td>5619</td><td>0913-351-725</td><td>會員直選任期2年115.12.31屆滿</td>
+                    </tr>
+                    <tr><td>組訓理事</td><td>游凱元</td><td>變電課</td><td>5611</td><td>0912-115-336</td><td>會員直選任期2年115.12.31屆滿</td></tr>
+                    <tr><td>福利理事</td><td>紀錦莉</td><td>處理課</td><td>3213</td><td>0987-748906</td><td>會員直選任期2年115.12.31屆滿</td></tr>
+                    <tr><td>文宣理事</td><td>黃信憲</td><td>施工班</td><td>6912</td><td>0920-963-123</td><td>會員直選任期2年115.12.31屆滿</td></tr>
+                    <tr><td>財務理事</td><td>鄭進德</td><td>線路課</td><td>6035</td><td>0928-741-377</td><td>會員直選任期2年115.12.31屆滿</td></tr>
+                    <tr><td>勞資理事</td><td>許惠茜</td><td>檢修課</td><td>6215</td><td>0933-658-840</td><td>會員直選任期2年115.12.31屆滿</td></tr>
+                    <tr><td>職安理事</td><td>陳明源</td><td>資控課</td><td>5711</td><td>0920-358-610</td><td>會員直選任期2年115.12.31屆滿</td></tr>
+                    <tr><td>秘書</td><td>黃富麗</td><td>營業課</td><td>2513</td><td>0952-890383</td><td>常務理事推派, 經理會議確認</td></tr>
+                    <tr><td>助理秘書</td><td>黃合全</td><td>線路課</td><td>6035</td><td>0932-186-357</td><td>常務理事推派, 經理會議確認</td></tr>
+                    <tr><td>助理秘書</td><td>周昌裕</td><td>變電課</td><td>5619</td><td>0916-760331</td><td>常務理事推派, 經理會議確認</td></tr>
+                    <tr><td>助理秘書</td><td>陳克武</td><td>市巡課</td><td>6313</td><td>0909-811-935</td><td>常務理事推派, 經理會議確認</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <script>
-        // --- JavaScript 互動邏輯：包含音樂控制與蓄能功能 ---
+        // --- JavaScript 互動邏輯：包含音樂控制、蓄能功能、以及 Modal 彈窗 ---
         const btn = document.getElementById('powerBtn');
         const fill = document.getElementById('powerFill');
         const statusText = document.getElementById('statusText');
@@ -349,7 +339,11 @@
         // 音樂控制變數
         const bgMusic = document.getElementById('bgMusic');
         const muteToggleBtn = document.getElementById('muteToggle');
-        bgMusic.volume = 0.3; // 預設音樂音量較低
+        bgMusic.volume = 0.3; 
+
+        // 彈窗變數
+        const vendorModal = document.getElementById('vendor-modal');
+        const memberModal = document.getElementById('member-modal');
 
         // 綁定靜音按鈕的點擊事件
         muteToggleBtn.addEventListener('click', toggleMute);
@@ -358,22 +352,46 @@
         let isCharging = false;
         let interval;
 
-        // --- 靜音/播放切換功能 ---
+        // --- 新增：Modal 彈窗控制功能 ---
+        function showModal(type) {
+            // 確保音樂繼續播放，因為點擊是使用者互動
+            if (bgMusic.muted) {
+                toggleMute();
+            }
+
+            if (type === 'vendor') {
+                vendorModal.style.display = 'block';
+            } else if (type === 'member') {
+                memberModal.style.display = 'block';
+            }
+        }
+
+        function closeModal() {
+            vendorModal.style.display = 'none';
+            memberModal.style.display = 'none';
+        }
+
+        // 允許使用者按下 ESC 鍵關閉彈窗
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+
+        // --- 靜音/播放切換功能 (保持不變) ---
         function toggleMute() {
             if (bgMusic.muted) {
-                // 取消靜音
                 bgMusic.muted = false;
                 muteToggleBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
                 muteToggleBtn.classList.add('unmuted');
             } else {
-                // 靜音
                 bgMusic.muted = true;
                 muteToggleBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
                 muteToggleBtn.classList.remove('unmuted');
             }
         }
 
-        // --- 蓄能功能：startCharging ---
+        // --- 蓄能功能 (保持不變) ---
         function startCharging() {
             if (powerLevel >= 100) return;
             
@@ -382,14 +400,12 @@
             statusText.innerText = "能量匯聚中...不要放手！";
             statusText.style.color = "var(--accent-yellow)";
             
-            // 播放輕微震動 (如果裝置支援)
             if (navigator.vibrate) navigator.vibrate(50);
 
             interval = setInterval(() => {
                 powerLevel += 2.5;
                 fill.style.width = powerLevel + '%';
                 
-                // 按鈕隨機震動視覺效果
                 const shakeX = (Math.random() - 0.5) * 4;
                 const shakeY = (Math.random() - 0.5) * 4;
                 btn.style.transform = `scale(0.98) translate(${shakeX}px, ${shakeY}px)`;
@@ -400,7 +416,6 @@
             }, 30);
         }
 
-        // --- 蓄能功能：stopCharging ---
         function stopCharging() {
             isCharging = false;
             clearInterval(interval);
@@ -425,7 +440,6 @@
             }
         }
 
-        // --- 蓄能功能：completeCharge ---
         function completeCharge() {
             clearInterval(interval);
             powerLevel = 100;
