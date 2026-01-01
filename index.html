@@ -1,430 +1,217 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台灣電力工會第39分會 | 莫忘中初</title>
-    
+    <title>THE CRUX：終極精簡版</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500;700;900&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;700;900&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <style>
-        /* --- CSS 樣式設定 --- */
         :root {
-            --bg-color: #0a0a0a;
-            --surface-color: #1a1a1a;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --accent-yellow: #FFD700; /* 閃電黃 */
-            --accent-blue: #00E5FF;   /* 電流藍 */
-            --green-highlight: #3D9970; /* 服務表單綠色 */
+            --black: #050505;
+            --gold: #D4AF37;
+            --white: #FFFFFF;
+            --red: #FF3B30;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; }
         body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* 背景紋理 (保持不變) */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(circle at 50% 50%, rgba(20, 20, 20, 0) 0%, rgba(0, 0, 0, 0.9) 100%),
-                              url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* 導覽列 */
-        nav {
+            background-color: #222;
+            margin: 0;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            padding: 15px 5%;
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(10, 10, 10, 0.8);
-        }
-        
-        /* 強化：LOGO 圖片尺寸與效果 */
-        .logo-img {
-            height: 80px; /* 大幅增大 Logo 尺寸 */
-            width: auto;
-            /* 讓 Logo 邊緣呈現更強烈的金屬/霓虹光暈 */
-            filter: drop-shadow(0 0 10px var(--accent-yellow)) saturate(150%) brightness(120%) contrast(150%);
-            transition: filter 0.3s;
-        }
-        .logo-img:hover {
-            filter: drop-shadow(0 0 20px var(--accent-yellow)) saturate(200%) brightness(150%) contrast(180%);
+            gap: 50px;
+            padding: 50px 0;
+            font-family: 'Noto Sans TC', sans-serif;
         }
 
-        /* --- 強化：快速連結按鈕樣式 --- */
-        .quick-links {
+        .slide {
+            width: 1280px;
+            height: 720px;
+            background: var(--black);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
             display: flex;
-            gap: 20px; /* 增加按鈕間距 */
+            flex-direction: column;
+            padding: 80px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
         }
 
-        .quick-btn {
-            background: none;
-            /* 將邊框顏色換成黃色，提升對比和高級感 */
-            border: 1px solid var(--accent-yellow); 
-            color: var(--text-primary);
-            padding: 10px 20px; /* 增大內邊距 */
-            border-radius: 6px; /* 微調圓角 */
-            cursor: pointer;
-            font-size: 1rem; /* 增大字體 */
-            font-weight: 700; /* 加粗字體 */
-            transition: all 0.3s;
+        /* 奢華金線裝飾 */
+        .slide::after {
+            content: '';
+            position: absolute;
+            bottom: 40px;
+            right: 80px;
+            width: 150px;
+            height: 2px;
+            background: var(--gold);
         }
 
-        .quick-btn:hover {
-            background-color: rgba(255, 215, 0, 0.1); /* 懸停時有淡黃色背景 */
-            color: var(--accent-yellow);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); /* 增加更明顯的光暈 */
+        /* 標題系統 */
+        .title {
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
         }
-        
-        /* Hero 區域 (保持不變) */
-        .hero {
-            min-height: 90vh;
+
+        .subtitle {
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            opacity: 0.6;
+            margin-bottom: 50px;
+        }
+
+        /* 封面專用 */
+        .cover-content {
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            position: relative;
-            padding: 120px 20px 80px;
         }
 
-        /* H1 Slogan (保持不變) */
-        .hero h1 {
-            font-size: clamp(3rem, 10vw, 6rem);
-            font-weight: 900;
-            letter-spacing: 5px;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--accent-yellow) 30%, #fff 100%);
+        .cover-content h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 110px;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff, var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
-        }
-        
-        /* Hero 區塊輔助文字 (保持強化後的尺寸) */
-        .hero p {
-            font-size: 1.25rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-            line-height: 1.8;
-            max-width: 700px;
-            margin: 0 auto 50px;
         }
 
-        /* 核心價值卡片 (保持強化後的尺寸) */
-        .features {
-            padding: 120px 5%;
+        /* 佈局 */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+
+        /* 重點文字 */
+        .sharp-text { font-size: 28px; line-height: 1.6; }
+        .sharp-text span { color: var(--gold); font-weight: 700; }
+
+        /* 矩陣數據 */
+        .matrix {
+            width: 100%;
+            border: 1px solid rgba(212, 175, 55, 0.3);
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            grid-template-columns: 1fr 1fr;
         }
-        
-        .card {
-            background: var(--surface-color);
+        .cell {
             padding: 50px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
         }
+        .cell-label { font-size: 18px; opacity: 0.5; margin-bottom: 10px; }
+        .cell-value { font-size: 80px; font-weight: 900; font-family: 'Cinzel', serif; }
+        .danger { color: var(--red); background: rgba(255, 59, 48, 0.05); }
 
-        .card h3 {
-            font-size: 1.8rem;
+        /* 通牒風格 */
+        .ultimatum {
+            background: var(--gold);
+            color: var(--black);
+            padding: 60px;
+            font-size: 42px;
             font-weight: 900;
-            margin-bottom: 18px;
-            color: #fff;
+            text-align: center;
+            line-height: 1.4;
         }
-
-        .card p {
-            color: #ccc; 
-            font-size: 1.15rem;
-            font-weight: 300;
-        }
-
-
-        /* 互動區塊 (保持不變) */
-        /* ... */
-
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" loop autoplay muted>
-        <source src="bg001.mp3" type="audio/mpeg"> 
-        您的瀏覽器不支援音訊元素。
-    </audio>
+<!-- Page 1: 封面 - 核心痛點 -->
+<div class="slide">
+    <div class="cover-content">
+        <p class="subtitle">Kansai Stress Test Report</p>
+        <h1>THE CRUX</h1>
+        <div style="width: 80px; height: 4px; background: var(--gold); margin: 40px 0;"></div>
+        <p style="font-size: 32px; font-weight: 300; letter-spacing: 10px;">關係的終局預測</p>
+    </div>
+</div>
 
-    <button id="muteToggle" class="music-control">
-        <i class="fas fa-volume-mute"></i>
-    </button>
-    
-    <nav>
-        <a href="#top" class="logo">
-            <img src="union_logo1.png" alt="台灣電力工會第39分會 LOGO" class="logo-img">
-        </a>
-        
-        <div class="quick-links">
-            <button class="quick-btn" onclick="showModal('member')">工會成員</button>
-            <button class="quick-btn" onclick="showModal('vendor')">服務廠商</button>
+<!-- Page 2: 殘酷現狀 - 14歲的價值鏈結 -->
+<div class="slide">
+    <div class="title">殘酷現狀：14 歲的代償槓桿</div>
+    <div class="subtitle">Analysis of the Age Gap</div>
+    <div class="grid-2">
+        <div class="sharp-text">
+            這不是一段平等的戀情，而是一場<span>「資源交換」</span>。<br><br>
+            40歲男方的優勢在於<span>穩定與大方</span>，一旦在關西旅遊表現出「計較」與「精算」，女方眼中的成熟濾鏡將即刻粉碎。
         </div>
-    </nav>
-
-    <section class="hero" id="top">
-        <h5>台灣電力工會 第39分會</h5>
-        <h1>莫忘中初</h1>
-        <p>每一分鐘，我們都在為勞工爭取最大利益。<br>面對資方，我們是那道永不熄滅的<span class="highlight">高壓防線</span>。</p>
-    </section>
-    
-    <section class="interactive-section">
-        <h2 style="margin-bottom: 10px; font-size: 2rem;">凝聚力量，點亮希望</h2>
-        <p style="color: #666; margin-bottom: 40px; font-size: 0.9rem;">試著長按下方按鈕，感受團結的力量</p>
-        
-        <div class="power-container">
-            <button class="power-btn" id="powerBtn">
-                長按<br>蓄力
-            </button>
-            <div class="power-level-bar">
-                <div class="power-level-fill" id="powerFill"></div>
-            </div>
-            <p class="status-text" id="statusText">等待注入力量...</p>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="card">
-            <h3>堅定立場</h3>
-            <p>面對體制與資方，我們絕不妥協。以最強硬的態度，守護每一位會員應得的每一分權益，寸步不讓。</p>
-        </div>
-        <div class="card">
-            <h3>分秒守護</h3>
-            <p>權益的流失往往發生在一瞬間。我們時刻警惕，24小時待命，確保您的工作尊嚴不受侵犯。</p>
-        </div>
-        <div class="card">
-            <h3>團結力量</h3>
-            <p>個人的聲音或許微小，但團結的怒吼能撼動高牆。第39分會是您最強大的後盾，我們並肩作戰。</p>
-        </div>
-    </section>
-    
-    <footer>
-        <p>&copy; 2025 台灣電力工會第39分會. All Rights Reserved.</p>
-        <p>為勞工而戰，永不歇息。</p>
-    </footer>
-
-    <div id="vendor-modal" class="info-modal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 style="color: var(--accent-yellow);">駐會服務廠商 (駐會服務時間：下午 2:00 - 5:00)</h2>
-            <table class="data-table vendor-table">
-                <thead>
-                    <tr>
-                        <th>時間</th>
-                        <th>駐會服務廠商</th>
-                        <th>服務專員</th>
-                        <th>服務專線</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>星期一</td><td>三商壽、中國人壽</td><td>葉貞淑、王柳芬、張珮瑜</td><td>0929-651916、0938-033838、0970-166789</td></tr>
-                    <tr><td>星期二</td><td>上億保經、富邦人壽</td><td>吳素珠、林佳慧、俞瑤</td><td>0982-640656、0919-060556、0921-994564</td></tr>
-                    <tr><td>星期三</td><td>和泰產物</td><td>李冠杰</td><td>0912-157154</td></tr>
-                    <tr><td>星期四</td><td>台新銀行、陽光生前契約、公勝保經</td><td>李婉茹、吳淑妙、黃詠靜</td><td>0933-765827、0932-662682、0927-598080</td></tr>
-                    <tr><td>星期五</td><td>國泰人壽、威勝保經、凱基銀行</td><td>謝春瑩、梁鳳玲、蘇燕雀、許嵐欣</td><td>0930-788266、0920-398508、0980-655345、0914-090067</td></tr>
-                </tbody>
-            </table>
+        <div style="background: #111; padding: 40px; border-left: 5px solid var(--gold);">
+            <p style="font-size: 20px; margin-bottom: 20px;"><i class="fa-solid fa-bolt" style="color:var(--gold)"></i> 關鍵警示：</p>
+            <p style="opacity: 0.8;">26歲的青春具有極高的市場流動性。男方的「節儉」會被解讀為對這份價值的<span>羞辱</span>。</p>
         </div>
     </div>
+</div>
 
-    <div id="member-modal" class="info-modal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 style="color: var(--green-highlight);">工會成員聯絡資訊 (會務推動中心)</h2>
-            <table class="data-table member-table">
-                <thead>
-                    <tr>
-                        <th>職稱</th>
-                        <th>姓名</th>
-                        <th>服務部門</th>
-                        <th>電話(0)</th>
-                        <th>行動</th>
-                        <th>備註</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="background: var(--green-highlight); color: var(--bg-color);">
-                        <td>常務理事</td><td>謝佳興</td><td>變電課</td><td>5619</td><td>0913-351-725</td><td>會員直選任期2年115.12.31屆滿</td>
-                    </tr>
-                    <tr><td>組訓理事</td><td>游凱元</td><td>變電課</td><td>5611</td><td>0912-115-336</td><td>會員直選任期2年115.12.31屆滿</td></tr>
-                    <tr><td>福利理事</td><td>紀錦莉</td><td>處理課</td><td>3213</td><td>0987-748906</td><td>會員直選任期2年115.12.31屆滿</td></tr>
-                    <tr><td>文宣理事</td><td>黃信憲</td><td>施工班</td><td>6912</td><td>0920-963-123</td><td>會員直選任期2年115.12.31屆滿</td></tr>
-                    <tr><td>財務理事</td><td>鄭進德</td><td>線路課</td><td>6035</td><td>0928-741-377</td><td>會員直選任期2年115.12.31屆滿</td></tr>
-                    <tr><td>勞資理事</td><td>許惠茜</td><td>檢修課</td><td>6215</td><td>0933-658-840</td><td>會員直選任期2年115.12.31屆滿</td></tr>
-                    <tr><td>職安理事</td><td>陳明源</td><td>資控課</td><td>5711</td><td>0920-358-610</td><td>會員直選任期2年115.12.31屆滿</td></tr>
-                    <tr><td>秘書</td><td>黃富麗</td><td>營業課</td><td>2513</td><td>0952-890383</td><td>常務理事推派, 經理會議確認</td></tr>
-                    <tr><td>助理秘書</td><td>黃合全</td><td>線路課</td><td>6035</td><td>0932-186-357</td><td>常務理事推派, 經理會議確認</td></tr>
-                    <tr><td>助理秘書</td><td>周昌裕</td><td>變電課</td><td>5619</td><td>0916-760331</td><td>常務理事推派, 經理會議確認</td></tr>
-                    <tr><td>助理秘書</td><td>陳克武</td><td>市巡課</td><td>6313</td><td>0909-811-935</td><td>常務理事推派, 經理會議確認</td></tr>
-                </tbody>
-            </table>
+<!-- Page 3: 分手矩陣 - 數據死穴 -->
+<div class="slide">
+    <div class="title">死亡矩陣：行為與概率</div>
+    <div class="subtitle">Probability of Separation</div>
+    <div class="matrix">
+        <div class="cell">
+            <div class="cell-label">大方補償模式</div>
+            <div class="cell-value" style="color: var(--gold);">5%</div>
+            <div style="opacity: 0.4;">用預算換取未來一年的服從</div>
+        </div>
+        <div class="cell">
+            <div class="cell-label">物質補償 + 吵架</div>
+            <div class="cell-value">25%</div>
+            <div style="opacity: 0.4;">尚有修補空間</div>
+        </div>
+        <div class="cell">
+            <div class="cell-label">理性精算 + 和諧</div>
+            <div class="cell-value">45%</div>
+            <div style="opacity: 0.4;">回國後開始物色新對象</div>
+        </div>
+        <div class="cell danger">
+            <div class="cell-label">理性精算 + 吵架</div>
+            <div class="cell-value">85%</div>
+            <div style="opacity: 1;">關係即刻解體</div>
         </div>
     </div>
+</div>
 
-    <script>
-        // JavaScript 互動邏輯 (保持不變)
-        const btn = document.getElementById('powerBtn');
-        const fill = document.getElementById('powerFill');
-        const statusText = document.getElementById('statusText');
-        const body = document.body;
-        
-        const bgMusic = document.getElementById('bgMusic');
-        const muteToggleBtn = document.getElementById('muteToggle');
-        bgMusic.volume = 0.3; 
+<!-- Page 4: 絕望真相 - 心理崩解 -->
+<div class="slide">
+    <div class="title">絕望真相：當精算碰撞衝突</div>
+    <div class="subtitle">The Psychology of Collapse</div>
+    <div class="content-area" style="text-align: center;">
+        <p style="font-size: 48px; font-weight: 900; margin-top: 50px;">「旅遊的帳單，是她的<span>最後通牒</span>。」</p>
+        <p style="font-size: 24px; opacity: 0.6; line-height: 2; margin-top: 30px;">
+            在大阪的每一筆匯率換算，都在扣除她對未來的憧憬。<br>
+            對她而言，吵架不可怕，可怕的是身邊那個<span>「比我大14歲卻在計較幾百塊」</span>的靈魂。
+        </p>
+    </div>
+</div>
 
-        const vendorModal = document.getElementById('vendor-modal');
-        const memberModal = document.getElementById('member-modal');
+<!-- Page 5: 戰略通牒 - 最終建議 -->
+<div class="slide">
+    <div class="title">戰略通牒：生存建議</div>
+    <div class="subtitle">Final Strategic Advice</div>
+    <div class="content-area" style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+        <div class="ultimatum">
+            放下計算機，拿起她的手。<br>
+            這趟旅行沒有「支出」，只有「贖金」。
+        </div>
+        <div class="grid-2" style="margin-top: 40px;">
+            <p style="font-size: 20px; opacity: 0.7;">
+                1. 徹底摧毀「節儉」人設，維持「博學大方」的統治力。<br>
+                2. 任何衝突的唯一解法：<span>物質補償</span>。
+            </p>
+            <p style="font-size: 20px; text-align: right; color: var(--gold);">
+                <i class="fa-solid fa-circle-exclamation"></i> 記住：一旦回國，你將失去修補的機會。
+            </p>
+        </div>
+    </div>
+</div>
 
-        muteToggleBtn.addEventListener('click', toggleMute);
-
-        let powerLevel = 0;
-        let isCharging = false;
-        let interval;
-
-        // Modal 彈窗控制功能 (保持不變)
-        function showModal(type) {
-            if (bgMusic.muted) {
-                toggleMute();
-            }
-
-            if (type === 'vendor') {
-                vendorModal.style.display = 'block';
-            } else if (type === 'member') {
-                memberModal.style.display = 'block';
-            }
-        }
-
-        function closeModal() {
-            vendorModal.style.display = 'none';
-            memberModal.style.display = 'none';
-        }
-
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
-                closeModal();
-            }
-        });
-
-        // 靜音/播放切換功能 (保持不變)
-        function toggleMute() {
-            if (bgMusic.muted) {
-                bgMusic.muted = false;
-                muteToggleBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                muteToggleBtn.classList.add('unmuted');
-            } else {
-                bgMusic.muted = true;
-                muteToggleBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                muteToggleBtn.classList.remove('unmuted');
-            }
-        }
-
-        // 蓄能功能 (保持不變)
-        function startCharging() {
-            if (powerLevel >= 100) return;
-            isCharging = true;
-            btn.classList.add('charging');
-            statusText.innerText = "能量匯聚中...不要放手！";
-            statusText.style.color = "var(--accent-yellow)";
-            if (navigator.vibrate) navigator.vibrate(50);
-            interval = setInterval(() => {
-                powerLevel += 2.5;
-                fill.style.width = powerLevel + '%';
-                const shakeX = (Math.random() - 0.5) * 4;
-                const shakeY = (Math.random() - 0.5) * 4;
-                btn.style.transform = `scale(0.98) translate(${shakeX}px, ${shakeY}px)`;
-                if (powerLevel >= 100) {
-                    completeCharge();
-                }
-            }, 30);
-        }
-
-        function stopCharging() {
-            isCharging = false;
-            clearInterval(interval);
-            btn.classList.remove('charging');
-            btn.style.transform = 'scale(1)'; 
-            if (powerLevel < 100) {
-                const drain = setInterval(() => {
-                    if (isCharging) {
-                        clearInterval(drain);
-                        return;
-                    }
-                    powerLevel -= 4;
-                    if (powerLevel <= 0) {
-                        powerLevel = 0;
-                        clearInterval(drain);
-                        statusText.innerText = "等待注入力量...";
-                        statusText.style.color = "var(--text-secondary)";
-                    }
-                    fill.style.width = powerLevel + '%';
-                }, 20);
-            }
-        }
-
-        function completeCharge() {
-            clearInterval(interval);
-            powerLevel = 100;
-            fill.style.width = '100%';
-            body.classList.add('powered-up');
-            btn.innerHTML = "力量<br>全開";
-            statusText.innerText = "團結一心，無堅不摧！";
-            statusText.style.color = "var(--accent-blue)";
-            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-            setTimeout(() => {
-                body.classList.remove('powered-up');
-                powerLevel = 0;
-                fill.style.width = '0%';
-                btn.innerHTML = "長按<br>蓄力";
-                statusText.innerText = "等待注入力量...";
-                statusText.style.color = "var(--text-secondary)";
-                stopCharging();
-            }, 3000);
-        }
-
-        // 綁定滑鼠與觸控事件
-        btn.addEventListener('mousedown', startCharging);
-        btn.addEventListener('mouseup', stopCharging);
-        btn.addEventListener('mouseleave', stopCharging);
-        btn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            startCharging();
-        });
-        btn.addEventListener('touchend', stopCharging);
-
-    </script>
 </body>
 </html>
