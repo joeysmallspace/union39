@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>THE CRUX：終極精簡版</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +17,7 @@
         }
 
         * { box-sizing: border-box; }
+        
         body {
             background-color: #222;
             margin: 0;
@@ -26,19 +27,32 @@
             gap: 50px;
             padding: 50px 0;
             font-family: 'Noto Sans TC', sans-serif;
+            /* 允許縮放 */
+            touch-action: manipulation;
         }
 
         .slide {
-            width: 1280px;
-            height: 720px;
+            width: 95vw;
+            max-width: 1280px;
+            height: auto;
+            min-height: 720px;
             background: var(--black);
             color: var(--white);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            padding: 80px;
+            padding: 60px 40px;
             box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 1024px) {
+            .slide {
+                width: 1280px;
+                height: 720px;
+                padding: 80px;
+            }
         }
 
         /* 奢華金線裝飾 */
@@ -46,32 +60,34 @@
             content: '';
             position: absolute;
             bottom: 40px;
-            right: 80px;
-            width: 150px;
+            right: 40px;
+            width: 100px;
             height: 2px;
             background: var(--gold);
         }
 
         /* 標題系統 */
         .title {
-            font-size: 56px;
+            font-size: clamp(32px, 5vw, 56px);
             font-weight: 900;
             color: var(--gold);
             margin-bottom: 20px;
             letter-spacing: -1px;
+            line-height: 1.2;
         }
 
         .subtitle {
-            font-size: 24px;
+            font-size: clamp(16px, 2vw, 24px);
             text-transform: uppercase;
             letter-spacing: 5px;
             opacity: 0.6;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         /* 封面專用 */
         .cover-content {
             height: 100%;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -81,7 +97,7 @@
 
         .cover-content h1 {
             font-family: 'Cinzel', serif;
-            font-size: 110px;
+            font-size: clamp(60px, 10vw, 110px);
             margin: 0;
             background: linear-gradient(to bottom, #fff, var(--gold));
             -webkit-background-clip: text;
@@ -89,10 +105,19 @@
         }
 
         /* 佈局 */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .grid-2 { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 40px; 
+            align-items: center; 
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr 1fr; gap: 80px; }
+        }
 
         /* 重點文字 */
-        .sharp-text { font-size: 28px; line-height: 1.6; }
+        .sharp-text { font-size: clamp(20px, 3vw, 28px); line-height: 1.6; }
         .sharp-text span { color: var(--gold); font-weight: 700; }
 
         /* 矩陣數據 */
@@ -100,26 +125,41 @@
             width: 100%;
             border: 1px solid rgba(212, 175, 55, 0.3);
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
         }
+
+        @media (min-width: 640px) {
+            .matrix { grid-template-columns: 1fr 1fr; }
+        }
+
         .cell {
-            padding: 50px;
+            padding: 40px 20px;
             border: 1px solid rgba(212, 175, 55, 0.3);
             text-align: center;
         }
-        .cell-label { font-size: 18px; opacity: 0.5; margin-bottom: 10px; }
-        .cell-value { font-size: 80px; font-weight: 900; font-family: 'Cinzel', serif; }
-        .danger { color: var(--red); background: rgba(255, 59, 48, 0.05); }
+        .cell-label { font-size: 16px; opacity: 0.5; margin-bottom: 10px; }
+        .cell-value { font-size: clamp(50px, 8vw, 80px); font-weight: 900; font-family: 'Cinzel', serif; }
+        .danger { color: var(--red); background: rgba(255, 59, 48, 0.1); }
 
         /* 通牒風格 */
         .ultimatum {
             background: var(--gold);
             color: var(--black);
-            padding: 60px;
-            font-size: 42px;
+            padding: 40px 20px;
+            font-size: clamp(24px, 4vw, 42px);
             font-weight: 900;
             text-align: center;
             line-height: 1.4;
+            margin: 20px 0;
+        }
+
+        .final-grid {
+            margin-top: 30px;
+        }
+
+        @media (max-width: 767px) {
+            .slide { height: auto; }
+            .final-grid p { text-align: left !important; font-size: 18px !important; }
         }
     </style>
 </head>
@@ -130,8 +170,8 @@
     <div class="cover-content">
         <p class="subtitle">Kansai Stress Test Report</p>
         <h1>THE CRUX</h1>
-        <div style="width: 80px; height: 4px; background: var(--gold); margin: 40px 0;"></div>
-        <p style="font-size: 32px; font-weight: 300; letter-spacing: 10px;">關係的終局預測</p>
+        <div style="width: 80px; height: 4px; background: var(--gold); margin: 30px 0;"></div>
+        <p style="font-size: clamp(20px, 4vw, 32px); font-weight: 300; letter-spacing: 5px;">關係的終局預測</p>
     </div>
 </div>
 
@@ -144,9 +184,9 @@
             這不是一段平等的戀情，而是一場<span>「資源交換」</span>。<br><br>
             40歲男方的優勢在於<span>穩定與大方</span>，一旦在關西旅遊表現出「計較」與「精算」，女方眼中的成熟濾鏡將即刻粉碎。
         </div>
-        <div style="background: #111; padding: 40px; border-left: 5px solid var(--gold);">
-            <p style="font-size: 20px; margin-bottom: 20px;"><i class="fa-solid fa-bolt" style="color:var(--gold)"></i> 關鍵警示：</p>
-            <p style="opacity: 0.8;">26歲的青春具有極高的市場流動性。男方的「節儉」會被解讀為對這份價值的<span>羞辱</span>。</p>
+        <div style="background: #111; padding: 30px; border-left: 5px solid var(--gold);">
+            <p style="font-size: 20px; margin-bottom: 15px;"><i class="fa-solid fa-bolt" style="color:var(--gold)"></i> 關鍵警示：</p>
+            <p style="opacity: 0.8; font-size: 18px; line-height: 1.6;">26歲的青春具有極高的市場流動性。男方的「節儉」會被解讀為對這份價值的<span>羞辱</span>。</p>
         </div>
     </div>
 </div>
@@ -159,22 +199,22 @@
         <div class="cell">
             <div class="cell-label">大方補償模式</div>
             <div class="cell-value" style="color: var(--gold);">5%</div>
-            <div style="opacity: 0.4;">用預算換取未來一年的服從</div>
+            <div style="opacity: 0.4; font-size: 14px;">用預算換取未來一年的服從</div>
         </div>
         <div class="cell">
             <div class="cell-label">物質補償 + 吵架</div>
             <div class="cell-value">25%</div>
-            <div style="opacity: 0.4;">尚有修補空間</div>
+            <div style="opacity: 0.4; font-size: 14px;">尚有修補空間</div>
         </div>
         <div class="cell">
             <div class="cell-label">理性精算 + 和諧</div>
             <div class="cell-value">45%</div>
-            <div style="opacity: 0.4;">回國後開始物色新對象</div>
+            <div style="opacity: 0.4; font-size: 14px;">回國後開始物色新對象</div>
         </div>
         <div class="cell danger">
             <div class="cell-label">理性精算 + 吵架</div>
             <div class="cell-value">85%</div>
-            <div style="opacity: 1;">關係即刻解體</div>
+            <div style="opacity: 1; font-size: 14px;">關係即刻解體</div>
         </div>
     </div>
 </div>
@@ -183,11 +223,11 @@
 <div class="slide">
     <div class="title">絕望真相：當精算碰撞衝突</div>
     <div class="subtitle">The Psychology of Collapse</div>
-    <div class="content-area" style="text-align: center;">
-        <p style="font-size: 48px; font-weight: 900; margin-top: 50px;">「旅遊的帳單，是她的<span>最後通牒</span>。」</p>
-        <p style="font-size: 24px; opacity: 0.6; line-height: 2; margin-top: 30px;">
+    <div class="content-area" style="text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+        <p style="font-size: clamp(30px, 6vw, 48px); font-weight: 900; margin-top: 20px;">「旅遊的帳單，是她的<span>最後通牒</span>。」</p>
+        <p style="font-size: clamp(18px, 3vw, 24px); opacity: 0.6; line-height: 1.8; margin-top: 30px; padding: 0 20px;">
             在大阪的每一筆匯率換算，都在扣除她對未來的憧憬。<br>
-            對她而言，吵架不可怕，可怕的是身邊那個<span>「比我大14歲卻在計較幾百塊」</span>的靈魂。
+            對她而言，吵架不可怕，可怕的是身邊那個<br><span>「比我大14歲卻在計較幾百塊」</span>的靈魂。
         </p>
     </div>
 </div>
@@ -201,8 +241,8 @@
             放下計算機，拿起她的手。<br>
             這趟旅行沒有「支出」，只有「贖金」。
         </div>
-        <div class="grid-2" style="margin-top: 40px;">
-            <p style="font-size: 20px; opacity: 0.7;">
+        <div class="grid-2 final-grid" style="margin-top: 20px;">
+            <p style="font-size: 20px; opacity: 0.7; line-height: 1.6;">
                 1. 徹底摧毀「節儉」人設，維持「博學大方」的統治力。<br>
                 2. 任何衝突的唯一解法：<span>物質補償</span>。
             </p>
