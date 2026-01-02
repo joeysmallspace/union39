@@ -203,7 +203,7 @@
     <div id="music-status">點擊畫面開啟音樂背景</div>
 
     <!-- 背景音樂 (請替換為您實際的 mp3 網址) -->
-    <audio id="bg-music" loop>
+    <audio id="bg-music">
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3" type="audio/mpeg">
     </audio>
 
@@ -272,7 +272,7 @@
         </div>
     </div>
 
-    <!-- Page 4: 真相 -->
+    <!-- Page 4: 真象 -->
     <div class="slide">
         <h2 class="main-title">絕望真相：<br>精算碰撞衝突</h2>
         <p class="subtitle">Psychology of Collapse</p>
@@ -311,12 +311,28 @@
     </div>
 
     <script>
+        // 設定播放區間 (單位：秒)
+        const startTime = 10; // 起始秒數
+        const endTime = 30;   // 結束秒數
+
+        const music = document.getElementById('bg-music');
+        const status = document.getElementById('music-status');
+
         function playMusic() {
-            const music = document.getElementById('bg-music');
-            const status = document.getElementById('music-status');
-            music.play();
-            status.style.display = 'none';
+            if (music.paused) {
+                music.currentTime = startTime; // 從設定的起點開始
+                music.play();
+                status.style.display = 'none';
+            }
         }
+
+        // 監聽播放時間，實現循環播放區段
+        music.addEventListener('timeupdate', function() {
+            if (music.currentTime >= endTime) {
+                music.currentTime = startTime; // 回到起點
+                music.play();
+            }
+        });
     </script>
 </body>
 </html>
