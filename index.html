@@ -3,255 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>THE CRUX：終極精簡版</title>
+    <title>THE CRUX：終極決策報告</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;700;900&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             --black: #050505;
             --gold: #D4AF37;
+            --dark-gold: #B8860B;
             --white: #FFFFFF;
             --red: #FF3B30;
         }
 
-        * { box-sizing: border-box; }
+        * { 
+            box-sizing: border-box; 
+            -webkit-font-smoothing: antialiased;
+            word-break: keep-all; /* 防止文字亂斷句 */
+        }
         
         body {
-            background-color: #222;
+            background-color: #000;
             margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 50px;
-            padding: 50px 0;
+            padding: 0;
             font-family: 'Noto Sans TC', sans-serif;
-            /* 允許縮放 */
-            touch-action: manipulation;
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* 增加自動播放音樂後的提示 */
+        #music-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            font-size: 10px;
+            color: var(--gold);
+            opacity: 0.5;
         }
 
         .slide {
-            width: 95vw;
-            max-width: 1280px;
-            height: auto;
-            min-height: 720px;
+            width: 100vw;
+            min-height: 100vh;
             background: var(--black);
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
-            padding: 60px 40px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
-            margin-bottom: 20px;
+            padding: 40px 25px;
+            position: relative;
+            border-bottom: 2px solid #222;
         }
 
-        @media (min-width: 1024px) {
-            .slide {
-                width: 1280px;
-                height: 720px;
-                padding: 80px;
-            }
-        }
-
-        /* 奢華金線裝飾 */
-        .slide::after {
-            content: '';
-            position: absolute;
-            bottom: 40px;
-            right: 40px;
-            width: 100px;
-            height: 2px;
-            background: var(--gold);
-        }
-
-        /* 標題系統 */
-        .title {
-            font-size: clamp(32px, 5vw, 56px);
+        /* 標題系統：大幅加粗與放大 */
+        .main-title {
+            font-size: 38px;
             font-weight: 900;
             color: var(--gold);
-            margin-bottom: 20px;
-            letter-spacing: -1px;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
             line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            border-left: 8px solid var(--gold);
+            padding-left: 15px;
         }
 
         .subtitle {
-            font-size: clamp(16px, 2vw, 24px);
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            opacity: 0.6;
-            margin-bottom: 40px;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 30px;
+            padding-left: 23px;
         }
 
-        /* 封面專用 */
-        .cover-content {
-            height: 100%;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
+        /* 封面樣式 */
+        .cover {
             justify-content: center;
             align-items: center;
             text-align: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
         }
 
-        .cover-content h1 {
+        .cover h1 {
             font-family: 'Cinzel', serif;
-            font-size: clamp(60px, 10vw, 110px);
+            font-size: 72px;
+            font-weight: 900;
             margin: 0;
+            line-height: 1;
             background: linear-gradient(to bottom, #fff, var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
         }
 
-        /* 佈局 */
-        .grid-2 { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 40px; 
-            align-items: center; 
+        .cover .desc {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            margin-top: 20px;
+            color: var(--gold);
         }
 
-        @media (min-width: 768px) {
-            .grid-2 { grid-template-columns: 1fr 1fr; gap: 80px; }
+        /* 內文 */
+        .content-box {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 1px solid #222;
         }
 
-        /* 重點文字 */
-        .sharp-text { font-size: clamp(20px, 3vw, 28px); line-height: 1.6; }
-        .sharp-text span { color: var(--gold); font-weight: 700; }
+        .highlight-text {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
 
-        /* 矩陣數據 */
-        .matrix {
-            width: 100%;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+        .highlight-text span {
+            color: var(--gold);
+            text-decoration: underline;
+        }
+
+        /* 矩陣重新設計：工整且清晰 */
+        .matrix-grid {
             display: grid;
             grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        @media (min-width: 640px) {
-            .matrix { grid-template-columns: 1fr 1fr; }
-        }
-
-        .cell {
-            padding: 40px 20px;
+        .matrix-card {
             border: 1px solid rgba(212, 175, 55, 0.3);
-            text-align: center;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0a0a0a;
         }
-        .cell-label { font-size: 16px; opacity: 0.5; margin-bottom: 10px; }
-        .cell-value { font-size: clamp(50px, 8vw, 80px); font-weight: 900; font-family: 'Cinzel', serif; }
-        .danger { color: var(--red); background: rgba(255, 59, 48, 0.1); }
 
-        /* 通牒風格 */
-        .ultimatum {
+        .matrix-info {
+            text-align: left;
+        }
+
+        .matrix-info .label {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .matrix-info .sub-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .matrix-val {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--gold);
+        }
+
+        .danger-card {
+            border-color: var(--red);
+            background: rgba(255, 59, 48, 0.05);
+        }
+
+        .danger-card .matrix-val {
+            color: var(--red);
+        }
+
+        /* 通牒樣式 */
+        .ultimatum-box {
             background: var(--gold);
             color: var(--black);
             padding: 40px 20px;
-            font-size: clamp(24px, 4vw, 42px);
+            font-size: 28px;
             font-weight: 900;
             text-align: center;
-            line-height: 1.4;
-            margin: 20px 0;
+            line-height: 1.5;
+            margin: 30px 0;
+            border-radius: 4px;
         }
 
-        .final-grid {
-            margin-top: 30px;
+        .footer-advice {
+            font-size: 18px;
+            line-height: 2;
+            opacity: 0.9;
         }
 
-        @media (max-width: 767px) {
-            .slide { height: auto; }
-            .final-grid p { text-align: left !important; font-size: 18px !important; }
+        /* 音樂控制 */
+        #bg-music {
+            display: none;
         }
     </style>
 </head>
-<body>
+<body onclick="playMusic()">
 
-<!-- Page 1: 封面 - 核心痛點 -->
-<div class="slide">
-    <div class="cover-content">
-        <p class="subtitle">Kansai Stress Test Report</p>
+    <div id="music-status">點擊畫面開啟音樂背景</div>
+
+    <!-- 背景音樂 (請替換為您實際的 mp3 網址) -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Page 1: 封面 -->
+    <div class="slide cover">
+        <p class="subtitle" style="padding-left:0;">Kansai Stress Test</p>
         <h1>THE CRUX</h1>
-        <div style="width: 80px; height: 4px; background: var(--gold); margin: 30px 0;"></div>
-        <p style="font-size: clamp(20px, 4vw, 32px); font-weight: 300; letter-spacing: 5px;">關係的終局預測</p>
+        <div style="width: 50px; height: 3px; background: var(--gold); margin: 30px 0;"></div>
+        <p class="desc">關係的終局預測</p>
     </div>
-</div>
 
-<!-- Page 2: 殘酷現狀 - 14歲的價值鏈結 -->
-<div class="slide">
-    <div class="title">殘酷現狀：14 歲的代償槓桿</div>
-    <div class="subtitle">Analysis of the Age Gap</div>
-    <div class="grid-2">
-        <div class="sharp-text">
-            這不是一段平等的戀情，而是一場<span>「資源交換」</span>。<br><br>
-            40歲男方的優勢在於<span>穩定與大方</span>，一旦在關西旅遊表現出「計較」與「精算」，女方眼中的成熟濾鏡將即刻粉碎。
+    <!-- Page 2: 現狀 -->
+    <div class="slide">
+        <h2 class="main-title">殘酷現狀：<br>14 歲的代償槓桿</h2>
+        <p class="subtitle">Value Chain Analysis</p>
+        <div class="content-box">
+            <p class="highlight-text">
+                這不是一段平等的戀情，<br>
+                而是一場<span>「資源交換」</span>。
+            </p>
+            <p style="opacity: 0.8; font-size: 18px; line-height: 1.6;">
+                40歲男方的優勢在於穩定，<br>
+                一旦在旅遊中表現出「計較」，<br>
+                女方眼中的成熟濾鏡將即刻粉碎。
+            </p>
         </div>
-        <div style="background: #111; padding: 30px; border-left: 5px solid var(--gold);">
-            <p style="font-size: 20px; margin-bottom: 15px;"><i class="fa-solid fa-bolt" style="color:var(--gold)"></i> 關鍵警示：</p>
-            <p style="opacity: 0.8; font-size: 18px; line-height: 1.6;">26歲的青春具有極高的市場流動性。男方的「節儉」會被解讀為對這份價值的<span>羞辱</span>。</p>
-        </div>
-    </div>
-</div>
-
-<!-- Page 3: 分手矩陣 - 數據死穴 -->
-<div class="slide">
-    <div class="title">死亡矩陣：行為與概率</div>
-    <div class="subtitle">Probability of Separation</div>
-    <div class="matrix">
-        <div class="cell">
-            <div class="cell-label">大方補償模式</div>
-            <div class="cell-value" style="color: var(--gold);">5%</div>
-            <div style="opacity: 0.4; font-size: 14px;">用預算換取未來一年的服從</div>
-        </div>
-        <div class="cell">
-            <div class="cell-label">物質補償 + 吵架</div>
-            <div class="cell-value">25%</div>
-            <div style="opacity: 0.4; font-size: 14px;">尚有修補空間</div>
-        </div>
-        <div class="cell">
-            <div class="cell-label">理性精算 + 和諧</div>
-            <div class="cell-value">45%</div>
-            <div style="opacity: 0.4; font-size: 14px;">回國後開始物色新對象</div>
-        </div>
-        <div class="cell danger">
-            <div class="cell-label">理性精算 + 吵架</div>
-            <div class="cell-value">85%</div>
-            <div style="opacity: 1; font-size: 14px;">關係即刻解體</div>
+        <div style="margin-top: 30px; padding: 20px; background: #111; border-left: 4px solid var(--red);">
+            <p style="color: var(--red); font-weight: 700;">⚠️ 警告：</p>
+            <p style="font-size: 16px;">26歲的青春具有極高流動性。<br>節儉會被解讀為對價值的羞辱。</p>
         </div>
     </div>
-</div>
 
-<!-- Page 4: 絕望真相 - 心理崩解 -->
-<div class="slide">
-    <div class="title">絕望真相：當精算碰撞衝突</div>
-    <div class="subtitle">The Psychology of Collapse</div>
-    <div class="content-area" style="text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-        <p style="font-size: clamp(30px, 6vw, 48px); font-weight: 900; margin-top: 20px;">「旅遊的帳單，是她的<span>最後通牒</span>。」</p>
-        <p style="font-size: clamp(18px, 3vw, 24px); opacity: 0.6; line-height: 1.8; margin-top: 30px; padding: 0 20px;">
-            在大阪的每一筆匯率換算，都在扣除她對未來的憧憬。<br>
-            對她而言，吵架不可怕，可怕的是身邊那個<br><span>「比我大14歲卻在計較幾百塊」</span>的靈魂。
+    <!-- Page 3: 矩陣 -->
+    <div class="slide">
+        <h2 class="main-title">死亡矩陣：<br>行為與概率</h2>
+        <p class="subtitle">Probability Analysis</p>
+        <div class="matrix-grid">
+            <div class="matrix-card">
+                <div class="matrix-info">
+                    <div class="label">大方補償模式</div>
+                    <div class="sub-label">用預算換取服從</div>
+                </div>
+                <div class="matrix-val">5%</div>
+            </div>
+            <div class="matrix-card">
+                <div class="matrix-info">
+                    <div class="label">物質補償 + 吵架</div>
+                    <div class="sub-label">尚有修補空間</div>
+                </div>
+                <div class="matrix-val">25%</div>
+            </div>
+            <div class="matrix-card">
+                <div class="matrix-info">
+                    <div class="label">理性精算 + 和諧</div>
+                    <div class="sub-label">回國後開始物色對象</div>
+                </div>
+                <div class="matrix-val">45%</div>
+            </div>
+            <div class="matrix-card danger-card">
+                <div class="matrix-info">
+                    <div class="label">理性精算 + 吵架</div>
+                    <div class="sub-label">關係即刻解體</div>
+                </div>
+                <div class="matrix-val">85%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 4: 真相 -->
+    <div class="slide">
+        <h2 class="main-title">絕望真相：<br>精算碰撞衝突</h2>
+        <p class="subtitle">Psychology of Collapse</p>
+        <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; text-align: center;">
+            <p style="font-size: 32px; font-weight: 900; line-height: 1.4;">
+                「旅遊的帳單，<br>
+                是她的<span>最後通牒</span>。」
+            </p>
+            <div style="height: 1px; background: #333; margin: 30px auto; width: 60%;"></div>
+            <p style="font-size: 18px; opacity: 0.7; line-height: 1.8;">
+                對她而言，吵架不可怕，<br>
+                可怕的是身邊那個<br>
+                「比我大14歲卻在計較」<br>
+                的靈魂。
+            </p>
+        </div>
+    </div>
+
+    <!-- Page 5: 通牒 -->
+    <div class="slide">
+        <h2 class="main-title">戰略通牒：<br>生存建議</h2>
+        <p class="subtitle">Strategic Advice</p>
+        <div class="ultimatum-box">
+            放下計算機，<br>拿起她的手。
+        </div>
+        <div class="content-box">
+            <p class="footer-advice">
+                1. 徹底摧毀<span>「節儉」</span>人設。<br>
+                2. 任何衝突的唯一解法：<br>
+                &nbsp;&nbsp;&nbsp;<span>物質補償</span>。
+            </p>
+        </div>
+        <p style="text-align: right; color: var(--gold); margin-top: 20px; font-weight: 700;">
+            一旦回國，你將失去機會。
         </p>
     </div>
-</div>
 
-<!-- Page 5: 戰略通牒 - 最終建議 -->
-<div class="slide">
-    <div class="title">戰略通牒：生存建議</div>
-    <div class="subtitle">Final Strategic Advice</div>
-    <div class="content-area" style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
-        <div class="ultimatum">
-            放下計算機，拿起她的手。<br>
-            這趟旅行沒有「支出」，只有「贖金」。
-        </div>
-        <div class="grid-2 final-grid" style="margin-top: 20px;">
-            <p style="font-size: 20px; opacity: 0.7; line-height: 1.6;">
-                1. 徹底摧毀「節儉」人設，維持「博學大方」的統治力。<br>
-                2. 任何衝突的唯一解法：<span>物質補償</span>。
-            </p>
-            <p style="font-size: 20px; text-align: right; color: var(--gold);">
-                <i class="fa-solid fa-circle-exclamation"></i> 記住：一旦回國，你將失去修補的機會。
-            </p>
-        </div>
-    </div>
-</div>
-
+    <script>
+        function playMusic() {
+            const music = document.getElementById('bg-music');
+            const status = document.getElementById('music-status');
+            music.play();
+            status.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
